@@ -3,7 +3,7 @@
 import 'package:familydriver/provider/LocationProvider.dart';
 import 'package:familydriver/provider/map_provider.dart';
 import 'package:familydriver/screens/Customer/Drvers_List_Page.dart';
-import 'package:familydriver/screens/Customer/Map/Near_Drver_List_page.dart';
+import 'package:familydriver/screens/Customer/Near_Drver_List_page.dart';
 
 import 'package:familydriver/screens/widgets/TextComponent.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,8 @@ import '../Schedule.dart';
 
 class AddNewAdrressScreen extends StatefulWidget {
   String token;
-  AddNewAdrressScreen({super.key, required this.token});
+  int id;
+  AddNewAdrressScreen({super.key, required this.token, required this.id});
 
   @override
   _AddNewAdrressScreenState createState() => _AddNewAdrressScreenState();
@@ -305,7 +306,20 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => NearDriverList(
-                                            token: widget.token)),
+                                            customerid: widget.id,
+                                            token: widget.token,
+                                            startlatitude: value2.startlatitude,
+                                            startlongitude:
+                                                value2.stratlongitude,
+                                            endlatitude: value2.endlatitude,
+                                            endlongitude: value2.endlongitude,
+                                            fromloaction: location1,
+                                            tolocation: location2,
+                                            distance: value2.getdistance(
+                                                value2.startlatitude,
+                                                value2.stratlongitude,
+                                                value2.endlatitude,
+                                                value2.endlongitude))),
                                   );
                                 },
                                 child: Container(

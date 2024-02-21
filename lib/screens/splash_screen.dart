@@ -24,12 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
   String token = "";
   @override
   void initState() {
+    getnumber();
     _customerlocatio = Provider.of<CustomerAddLocation>(context, listen: false);
     _locationprovider = Provider.of<LocationProvider>(context, listen: false);
 
     _locationprovider.getUserCodinate();
     _customerlocatio.updateLocationList(token, context);
-    getnumber();
+
     Timer(const Duration(seconds: 2), () async {
       //Adding New Method
       Navigator.push(
@@ -52,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {
       num = int.parse(prefs.getInt('num').toString());
       token = prefs.getString('token').toString();
+      
     });
   }
 

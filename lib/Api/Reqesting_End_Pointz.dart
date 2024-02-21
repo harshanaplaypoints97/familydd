@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:familydriver/constant/App_color.dart';
 import 'package:familydriver/model/UserModel.dart';
 
-class GetNearByDrivers {
+class ReqestingDriver {
   static List<NearByDrivers> neardriverlist = [];
 
   static Future<List<NearByDrivers>> getNearByDrivers(

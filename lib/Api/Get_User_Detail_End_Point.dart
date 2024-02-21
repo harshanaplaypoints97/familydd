@@ -26,6 +26,7 @@ class GetUserDetail {
       userlist.clear();
 
       User user = User(
+        id: data["user"]["id"] ?? "",
         name: data["user"]["name"] ?? "",
         email: data["user"]["email"] ?? "",
         phone_number: data["user"]["phone_number"] ?? "",

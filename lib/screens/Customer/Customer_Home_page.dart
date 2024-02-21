@@ -25,6 +25,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
   late LocationProvider _locationprovider;
   late CustomerAddLocation _customerAddLocation;
   String name = "", email = "", profileimage = "", address = "";
+  int id = 0;
   late Future<List<User>> _userDetails;
   late CustomerAddLocation _customerlocatio;
   late Future<List<Locations>> _locationDetail;
@@ -53,8 +54,9 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
     _userDetails =
         GetUserDetail.getUserDetails(widget.mytoken).then((List<User> data) {
       for (User user in data) {
-        print('Name: ${user.name}, Email: ${user.email}');
+        print('Name: ${user.name}, Email: ${user.email}' 'id  : ${user.id}');
         setState(() {
+          id = user.id;
           name = user.name;
           email = user.email;
           profileimage = user.profile_image_url;
@@ -187,7 +189,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            AddNewAdrressScreen(token: widget.mytoken),
+                            AddNewAdrressScreen(token: widget.mytoken, id: id),
                       ));
                 },
                 controller: searchcontroller,
@@ -360,6 +362,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             AddNewAdrressScreen(
+                                              id: id,
                                               token: widget.mytoken,
                                             )),
                                   );

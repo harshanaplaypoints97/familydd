@@ -92,15 +92,16 @@ class LocationProvider extends ChangeNotifier {
 
   //Calculate Distance Meter
 
-  void getdistance(
+  double getdistance(
       double startlatitude, startlongitude, endlatitude, endlongitude) {
     try {
       distance = Geolocator.distanceBetween(
               startlatitude, startlongitude, endlatitude, endlongitude) /
           1000;
-      Logger().w(distance);
-      notifyListeners();
+
+      return distance;
     } catch (e) {}
+    return distance;
   }
 
   PolylinePoints polylinePoints = PolylinePoints();
