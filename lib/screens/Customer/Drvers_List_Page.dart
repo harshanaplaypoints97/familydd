@@ -94,7 +94,6 @@ class _DriverListPageState extends State<DriverListPage> {
                         },
                         child: Container(
                           width: 380,
-                          height: MediaQuery.of(context).size.height,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(25),
@@ -110,7 +109,7 @@ class _DriverListPageState extends State<DriverListPage> {
                                       width: 350,
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 50),
+                                            vertical: 0),
                                         child: Container(
                                           width: 350,
                                           decoration: BoxDecoration(
@@ -122,20 +121,19 @@ class _DriverListPageState extends State<DriverListPage> {
                                               bottomRight: Radius.zero,
                                             ),
                                           ),
-                                          child: Row(
-                                            children: [
-                                              Flexible(
-                                                flex: 4,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    //Name Of The Driver
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Flexible(
+                                                  flex: 4,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      //Name Of The Driver
+                                                      Text(
                                                         driversList?[index]
                                                                 .name ??
                                                             "",
@@ -143,52 +141,47 @@ class _DriverListPageState extends State<DriverListPage> {
                                                             color: Colors.white,
                                                             fontSize: 16),
                                                       ),
-                                                    ),
-                                                    //can Drvie Vehicle Type
-                                                    Text(
-                                                      driversList?[index]
-                                                              .vehicle_type ??
-                                                          "",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 16),
-                                                    ),
-                                                    //Drver Phone Number
-                                                    Text(
-                                                      driversList?[index]
-                                                              .phone_number ??
-                                                          "",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 16),
-                                                    ),
-                                                    //Drver Status
-                                                    Text(
-                                                      driversList?[index]
-                                                              .status ??
-                                                          "",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 16),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              11.0),
-                                                      child: Text(
+                                                      //can Drvie Vehicle Type
+                                                      Text(
+                                                        driversList?[index]
+                                                                .vehicle_type ??
+                                                            "",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16),
+                                                      ),
+                                                      //Drver Phone Number
+                                                      Text(
+                                                        driversList?[index]
+                                                                .phone_number ??
+                                                            "",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16),
+                                                      ),
+                                                      //Drver Status
+                                                      Text(
+                                                        driversList?[index]
+                                                                .status ??
+                                                            "",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16),
+                                                      ),
+                                                      Text(
                                                         '"Experienced and safety-focused driver with a flawlessddddddd driving record hfewihfeifhiefhefiheihfheuhfuhekfheikfhuehfejshefoefhifhehfheofoehfoifhfhand expertise in navigating diverse road conditions. Skilled in efficient route planning and adept at delivering exceptional customer service. Reliable team player with a strong commitment to on-time performance.ssssssssssssssssssss"',
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 12),
                                                         // textAlign: TextAlign.justify,
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                  flex: 3, child: Container())
-                                            ],
+                                                Expanded(
+                                                    flex: 3, child: Container())
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),

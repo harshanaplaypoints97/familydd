@@ -23,6 +23,7 @@ class NearDriverList extends StatefulWidget {
     required this.tolocation,
     required this.distance,
     required this.customerid,
+    
   });
 
   @override
@@ -30,6 +31,7 @@ class NearDriverList extends StatefulWidget {
 }
 
 class _NearDriverListState extends State<NearDriverList> {
+  late Timer _timer;
   late StreamController<List<NearByDrivers>> _controller;
   late Stream<List<NearByDrivers>> _stream;
 
@@ -39,15 +41,30 @@ class _NearDriverListState extends State<NearDriverList> {
 
     _controller = StreamController<List<NearByDrivers>>();
     _stream = _controller.stream;
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      // Update data every 5 minutes (adjust as needed)
+      getAllDrivers(widget.startlatitude, widget.startlongitude);
+    });
 
     // Fetch data when the widget is initialized
-    getAllDrivers();
+    getAllDrivers(widget.startlatitude, widget.startlongitude);
   }
 
-  Future<void> getAllDrivers() async {
+  void dispose() {
+    // Cancel the timer to avoid memory leaks
+    _timer.cancel();
+
+    // Close the stream controller when the widget is disposed
+    _controller.close();
+
+    super.dispose();
+  }
+
+  Future<void> getAllDrivers(
+      double startlatitude, double startlongitude) async {
     try {
-      List<NearByDrivers> driversList =
-          await GetNearByDrivers.getNearByDrivers(widget.token, 80, 6.9343455);
+      List<NearByDrivers> driversList = await GetNearByDrivers.getNearByDrivers(
+          widget.token, startlongitude, startlatitude);
 
       // Add the obtained list to the stream
       _controller.add(driversList);
@@ -95,6 +112,7 @@ class _NearDriverListState extends State<NearDriverList> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ReqestedPage(
+                                 
                                   customerid: widget.customerid,
                                   distance: widget.distance,
                                   endlatitude: widget.endlatitude,
@@ -112,7 +130,6 @@ class _NearDriverListState extends State<NearDriverList> {
                         child: Container(
                           child: Container(
                             width: 380,
-                            height: MediaQuery.of(context).size.height,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(25),
@@ -128,7 +145,7 @@ class _NearDriverListState extends State<NearDriverList> {
                                         width: 350,
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              vertical: 50),
+                                              vertical: 0),
                                           child: Container(
                                             width: 350,
                                             decoration: BoxDecoration(
@@ -147,26 +164,22 @@ class _NearDriverListState extends State<NearDriverList> {
                                                   child: Padding(
                                                     padding: const EdgeInsets
                                                         .symmetric(
-                                                        horizontal: 5),
+                                                        horizontal: 10,
+                                                        vertical: 10),
                                                     child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
                                                         //Name Of The Driver
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Text(
-                                                            driversList?[index]
-                                                                    .name ??
-                                                                "",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 16),
-                                                          ),
+                                                        Text(
+                                                          driversList?[index]
+                                                                  .name ??
+                                                              "",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16),
                                                         ),
                                                         //can Drvie Vehicle Type
                                                         Text(
@@ -248,7 +261,7 @@ class _NearDriverListState extends State<NearDriverList> {
                                         child: Image.asset(
                                           'assets/DriverPic.png',
                                           width: 160,
-                                          height: 250,
+                                          height: 150,
                                           fit: BoxFit.fitHeight,
                                         ),
                                       )

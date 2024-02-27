@@ -39,7 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
             builder: (context) => num == 1
                 ? CustomerHomepage(mytoken: token)
                 : num == 2
-                    ? DriverHomePage()
+                    ? DriverHomePage(
+                        token: token,
+                      )
                     : Loginpage(),
           ));
     });
@@ -53,7 +55,6 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {
       num = int.parse(prefs.getInt('num').toString());
       token = prefs.getString('token').toString();
-      
     });
   }
 

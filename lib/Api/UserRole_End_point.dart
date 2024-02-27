@@ -56,7 +56,7 @@ class UserRoleNavigatorEndPoint {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const DriverHomePage(),
+              builder: (context) => DriverHomePage(token: token),
             ));
         //Adding New
         prefs.setInt('num', 2);

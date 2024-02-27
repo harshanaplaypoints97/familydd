@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
+import 'package:familydriver/Api/Reqesting_End_Pointz.dart';
 import 'package:familydriver/constant/App_color.dart';
 import 'package:familydriver/screens/widgets/Rouned_boutton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:logger/logger.dart';
+import 'package:http/http.dart' as http;
 
 class ReqestedPage extends StatefulWidget {
   String token, fromloaction, tolocation;
@@ -28,6 +33,83 @@ class ReqestedPage extends StatefulWidget {
 }
 
 class _ReqestedPageState extends State<ReqestedPage> {
+  int rideid = 0;
+  @override
+  void initState() {
+    ridereq();
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Future<void> RidesRequest(
+    String token,
+    double fromlongitude,
+    double fromlatitude,
+    double tolongitude,
+    double tolatitude,
+    double distance,
+    String status,
+    String startDestination,
+    String endDestination,
+    int driverId,
+  ) async {
+    try {
+      final response = await http.post(
+        Uri.parse(AppColors.BaseUrl + "api/rides"),
+        headers: {
+          "accept": "application/json",
+          'Authorization': 'Bearer $token',
+        },
+        body: {
+          "driver_id": driverId.toString(),
+          "from_location": startDestination,
+          "to_location": endDestination,
+          "status":
+              status, //requested, accepted, declined, in_progress, completed, canceled
+          "from_latitude": fromlatitude.toString(),
+          "from_longitude": fromlongitude.toString(),
+          "to_latitude": tolatitude.toString(),
+          "to_longitude": tolongitude.toString(),
+          "distance_km": distance.toString(),
+        },
+      );
+
+      print(response.body);
+
+      if (response.statusCode == 201) {
+        var data = jsonDecode(response.body);
+        setState(() {
+          rideid = data["ride"]["id"];
+        });
+      } else {
+        print("Error: ${response.statusCode}");
+        // Handle the error accordingly
+      }
+    } catch (e) {
+      print("Exception: $e");
+      // Handle the exception accordingly
+    }
+  }
+
+  void ridereq() {
+    setState(() {
+      RidesRequest(
+          widget.token,
+          widget.startlongitude,
+          widget.startlatitude,
+          widget.endlongitude,
+          widget.endlatitude,
+          widget.distance,
+          "declined",
+          widget.fromloaction,
+          widget.tolocation,
+          widget.driver_id);
+
+      Logger().i(rideid.toString());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,8 +192,23 @@ class _ReqestedPageState extends State<ReqestedPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: RoundedButton(
-                buttonText: widget.customerid.toString(),
-                onPress: () {},
+                buttonText: 'Cancle',
+                onPress: () {
+                  ReqestingDriver.RidesRequestUpdate(
+                      rideid,
+                      widget.token,
+                      widget.customerid,
+                      widget.startlongitude,
+                      widget.startlatitude,
+                      widget.endlongitude,
+                      widget.endlatitude,
+                      widget.distance,
+                      'canceled',
+                      widget.fromloaction,
+                      widget.tolocation,
+                      widget.driver_id);
+                  Navigator.pop(context);
+                },
                 color: Colors.green),
           )
         ],
