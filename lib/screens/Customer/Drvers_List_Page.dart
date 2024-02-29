@@ -2,15 +2,29 @@ import 'dart:async';
 
 import 'package:familydriver/Api/Get_All_drivers.dart';
 import 'package:familydriver/model/UserModel.dart';
-import 'package:familydriver/screens/Customer/RideConfirmPage_a.dart';
+import 'package:familydriver/screens/Customer/InstanceRideConfirmPage_a.dart';
+import 'package:familydriver/screens/Customer/RideShaduleConfirmpage.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/App_color.dart';
 
 class DriverListPage extends StatefulWidget {
-  String token;
-  DriverListPage({super.key, required this.token});
+  String token, tolocation, fromlocation;
+  int customerid;
+  double distance, startlatitude, startlongitude, endlongitude, endlatitude;
+  DriverListPage(
+      {super.key,
+      required this.token,
+      required this.customerid,
+      required this.endlatitude,
+      required this.endlongitude,
+      required this.startlatitude,
+      required this.distance,
+      required this.fromlocation,
+      required this.startlongitude,
+      required this.tolocation});
 
   @override
   State<DriverListPage> createState() => _DriverListPageState();
@@ -81,16 +95,23 @@ class _DriverListPageState extends State<DriverListPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Ridedetail(
-                                  Distance: "25",
-                                  totalprice: 523.00,
-                                  driver_age: "",
-                                  driver_contact_num:
-                                      driversList![index].phone_number,
-                                  driver_name: driversList![index].name,
-                                  driver_nic: driversList![index].nic,
-                                ),
-                              ));
+                                  builder: (context) => RideShadulePage(
+                                        totalprice: widget.distance * 200,
+                                        Distance: widget.distance,
+                                        customerid: widget.customerid,
+                                        driver_contact_num:
+                                            driversList![index].phone_number,
+                                        driver_name: driversList![index].name,
+                                        driver_nic: driversList![index].nic,
+                                        driveri: driversList![index].id,
+                                        endlatitude: widget.endlatitude,
+                                        endlongitude: widget.endlongitude,
+                                        fromloaction: widget.fromlocation,
+                                        startlatitude: widget.startlatitude,
+                                        startlongitude: widget.startlongitude,
+                                        token: widget.token,
+                                        tolocation: widget.tolocation,
+                                      )));
                         },
                         child: Container(
                           width: 380,
@@ -168,13 +189,6 @@ class _DriverListPageState extends State<DriverListPage> {
                                                             color: Colors.white,
                                                             fontSize: 16),
                                                       ),
-                                                      Text(
-                                                        '"Experienced and safety-focused driver with a flawlessddddddd driving record hfewihfeifhiefhefiheihfheuhfuhekfheikfhuehfejshefoefhifhehfheofoehfoifhfhand expertise in navigating diverse road conditions. Skilled in efficient route planning and adept at delivering exceptional customer service. Reliable team player with a strong commitment to on-time performance.ssssssssssssssssssss"',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12),
-                                                        // textAlign: TextAlign.justify,
-                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -188,11 +202,11 @@ class _DriverListPageState extends State<DriverListPage> {
                                     ),
                                     Positioned(
                                       right: 0,
-                                      top: 75,
+                                      bottom: 0,
                                       child: Image.asset(
                                         'assets/DriverPic.png',
                                         width: 160,
-                                        height: 250,
+                                        height: 80,
                                         fit: BoxFit.fitHeight,
                                       ),
                                     )

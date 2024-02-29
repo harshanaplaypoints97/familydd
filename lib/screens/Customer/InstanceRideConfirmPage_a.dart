@@ -1,13 +1,18 @@
+import 'package:familydriver/screens/Customer/ReqestedPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant/App_color.dart';
 
 class Ridedetail extends StatefulWidget {
   double totalprice;
   String Distance;
-  String driver_name, driver_nic, driver_contact_num, driver_age;
+  String driver_name, driver_nic, driver_contact_num, driver_age, drop, pickup;
+  String token, fromloaction, tolocation;
+  double startlongitude, startlatitude, endlatitude, endlongitude, distance;
+  int customerid, driverid;
   // ignore: non_constant_identifier_names
   Ridedetail(
       {super.key,
@@ -16,13 +21,33 @@ class Ridedetail extends StatefulWidget {
       required this.driver_age,
       required this.driver_contact_num,
       required this.driver_name,
-      required this.driver_nic});
+      required this.driver_nic,
+      required this.drop,
+      required this.pickup,
+      required this.endlatitude,
+      required this.token,
+      required this.endlongitude,
+      required this.startlatitude,
+      required this.startlongitude,
+      required this.fromloaction,
+      required this.tolocation,
+      required this.distance,
+      required this.customerid,
+      required this.driverid});
 
   @override
   State<Ridedetail> createState() => _RidedetailState();
 }
 
 class _RidedetailState extends State<Ridedetail> {
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +106,8 @@ class _RidedetailState extends State<Ridedetail> {
                                 height: 6,
                               ),
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     '  ' + widget.driver_name,
@@ -90,12 +117,28 @@ class _RidedetailState extends State<Ridedetail> {
                                         color: Colors.white),
                                   ),
                                   SizedBox(
-                                    width: 100,
+                                    width: 10,
                                   ),
-                                  Icon(
-                                    Icons.favorite,
-                                    color: Colors.white,
-                                  )
+                                  InkWell(
+                                    onTap: () {
+                                      _makePhoneCall(widget.driver_contact_num);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        child: Icon(
+                                          Icons.call,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                               SizedBox(
@@ -103,16 +146,19 @@ class _RidedetailState extends State<Ridedetail> {
                               ),
                               Text(
                                 '   NIC - ' + widget.driver_nic,
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(fontSize: 12),
                               ),
-                              Text(
-                                '   Contact number - ' +
+                              Row(
+                                children: [
+                                  Text(
+                                    '   Contact number - ',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  Text(
                                     widget.driver_contact_num,
-                                style: TextStyle(fontSize: 10),
-                              ),
-                              Text(
-                                '   Age - 25',
-                                style: TextStyle(fontSize: 10),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
                               ),
                               Divider(),
                               SizedBox(
@@ -152,15 +198,18 @@ class _RidedetailState extends State<Ridedetail> {
                       decoration: BoxDecoration(
                           color: Colors.blueGrey[200],
                           borderRadius: BorderRadius.circular(15)),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          LocationPoint(),
-                          SizedBox(width: 10),
-                          Text("Pickup Location "),
-                        ],
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            LocationPoint(),
+                            SizedBox(width: 10),
+                            Text("Pickup  : " + widget.pickup),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -173,15 +222,18 @@ class _RidedetailState extends State<Ridedetail> {
                       decoration: BoxDecoration(
                           color: Colors.blueGrey[200],
                           borderRadius: BorderRadius.circular(15)),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          EndlocationPoint(),
-                          SizedBox(width: 10),
-                          Text("Drop location ")
-                        ],
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            EndlocationPoint(),
+                            SizedBox(width: 10),
+                            Text("Drop   : " + widget.drop)
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -192,8 +244,9 @@ class _RidedetailState extends State<Ridedetail> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '28Km',
-                      style: TextStyle(fontWeight: FontWeight.w400),
+                      widget.Distance + " Km",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
                     ),
                     SizedBox(
                       height: 10,
@@ -203,8 +256,9 @@ class _RidedetailState extends State<Ridedetail> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Rs' + widget.totalprice.toString(),
-                      style: TextStyle(fontWeight: FontWeight.w400),
+                      'Rs ' + widget.totalprice.toStringAsFixed(2),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                     ),
                     SizedBox(
                       height: 10,
@@ -213,37 +267,60 @@ class _RidedetailState extends State<Ridedetail> {
                       'Arrival time',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      '11.30 PM - 12.00 PM',
-                      style: TextStyle(fontWeight: FontWeight.w400),
+                    Center(
+                      child: Text(
+                        ((double.parse(widget.Distance) / 40) * 60)
+                                .toStringAsFixed(2) +
+                            ' Min',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            color: Colors.red),
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Add your confirmation logic here
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 15, horizontal: 50), // Button padding
-                  primary: Colors.blue, // Button background color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    // Button border radius
-                  ),
-                ),
-                child: Text(
-                  'Confirm', // Button text
-                  style: TextStyle(
-                    fontSize: 18, // Button text size
-                    fontWeight: FontWeight.bold, // Button text weight
-                    color: Colors.white, // Button text color
-                  ),
-                ),
-              ),
+              SizedBox(height: 50),
             ],
+          ),
+        ),
+      ),
+      floatingActionButton: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReqestedPage(
+                  dateandTime: '',
+                  ridertype: 'instant',
+                  customerid: widget.customerid,
+                  distance: widget.distance,
+                  endlatitude: widget.endlatitude,
+                  endlongitude: widget.endlongitude,
+                  fromloaction: widget.fromloaction,
+                  startlatitude: widget.startlatitude,
+                  startlongitude: widget.startlongitude,
+                  token: widget.token,
+                  tolocation: widget.tolocation,
+                  driver_id: widget.driverid,
+                ),
+              ));
+        },
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+          backgroundColor: Colors.blue, // Button background color
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            // Button border radius
+          ),
+        ),
+        child: Text(
+          'Confirm', // Button text
+          style: TextStyle(
+            fontSize: 18, // Button text size
+            fontWeight: FontWeight.bold, // Button text weight
+            color: Colors.white, // Button text color
           ),
         ),
       ),

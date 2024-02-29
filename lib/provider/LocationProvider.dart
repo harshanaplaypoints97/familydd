@@ -128,4 +128,9 @@ class LocationProvider extends ChangeNotifier {
       }
     } catch (e) {}
   }
+
+  void clearPolyline() {
+    _polyDta.clear();
+    notifyListeners();
+  }
 }

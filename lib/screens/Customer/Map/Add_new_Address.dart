@@ -15,19 +15,26 @@ import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../RideConfirmPage_a.dart';
+import '../InstanceRideConfirmPage_a.dart';
 import '../Schedule.dart';
 
 class AddNewAdrressScreen extends StatefulWidget {
   String token;
   int id;
-  AddNewAdrressScreen({super.key, required this.token, required this.id});
+  bool Isdshadule, Isinstanta;
+  AddNewAdrressScreen(
+      {super.key,
+      required this.token,
+      required this.id,
+      required this.Isdshadule,
+      required this.Isinstanta});
 
   @override
   _AddNewAdrressScreenState createState() => _AddNewAdrressScreenState();
 }
 
 class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
+  late LocationProvider _locationprovider;
   bool mapcamera = false;
   bool searchedaddressed = false;
   String address1 = '';
@@ -50,6 +57,8 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
   @override
   void initState() {
     super.initState();
+    _locationprovider = Provider.of<LocationProvider>(context, listen: false);
+    _locationprovider.clearPolyline();
     // Get the user's current location continuously
   }
 
@@ -300,73 +309,99 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => NearDriverList(
-                                            customerid: widget.id,
-                                            token: widget.token,
-                                            startlatitude: value2.startlatitude,
-                                            startlongitude:
-                                                value2.stratlongitude,
-                                            endlatitude: value2.endlatitude,
-                                            endlongitude: value2.endlongitude,
-                                            fromloaction: location1,
-                                            tolocation: location2,
-                                            distance: value2.getdistance(
-                                                value2.startlatitude,
-                                                value2.stratlongitude,
-                                                value2.endlatitude,
-                                                value2.endlongitude))),
-                                  );
-                                },
-                                child: Container(
-                                  child: Center(
-                                    child: TextComponent(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontsize: 20,
-                                        text: "Confirm  "),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  height: 50,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.45,
-                                ),
-                              ),
+                              widget.Isinstanta
+                                  ? InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => NearDriverList(
+                                                  customerid: widget.id,
+                                                  token: widget.token,
+                                                  startlatitude:
+                                                      value2.startlatitude,
+                                                  startlongitude:
+                                                      value2.stratlongitude,
+                                                  endlatitude:
+                                                      value2.endlatitude,
+                                                  endlongitude:
+                                                      value2.endlongitude,
+                                                  fromloaction: location1,
+                                                  tolocation: location2,
+                                                  distance: value2.getdistance(
+                                                      value2.startlatitude,
+                                                      value2.stratlongitude,
+                                                      value2.endlatitude,
+                                                      value2.endlongitude))),
+                                        );
+                                      },
+                                      child: Container(
+                                        child: Center(
+                                          child: TextComponent(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontsize: 20,
+                                              text: "Confirm  "),
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        height: 50,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.45,
+                                      ),
+                                    )
+                                  : Container(),
                               SizedBox(
                                 width: 15,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DriverListPage(
-                                              token: widget.token,
-                                            )),
-                                  );
-                                },
-                                child: Container(
-                                  child: Center(
-                                    child: TextComponent(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontsize: 20,
-                                        text: "Shadule"),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.amber[600],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  height: 50,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.45,
-                                ),
-                              ),
+                              widget.Isdshadule
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => DriverListPage(
+                                                  customerid: widget.id,
+                                                  token: widget.token,
+                                                  startlatitude:
+                                                      value2.startlatitude,
+                                                  startlongitude:
+                                                      value2.stratlongitude,
+                                                  endlatitude:
+                                                      value2.endlatitude,
+                                                  endlongitude:
+                                                      value2.endlongitude,
+                                                  fromlocation: location1,
+                                                  tolocation: location2,
+                                                  distance: value2.getdistance(
+                                                      value2.startlatitude,
+                                                      value2.stratlongitude,
+                                                      value2.endlatitude,
+                                                      value2.endlongitude))),
+                                        );
+                                      },
+                                      child: Container(
+                                        child: Center(
+                                          child: TextComponent(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontsize: 20,
+                                              text: "Shadule"),
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.amber[600],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        height: 50,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.45,
+                                      ),
+                                    )
+                                  : Container(),
                             ],
                           ),
                         ],

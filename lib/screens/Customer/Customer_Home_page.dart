@@ -97,7 +97,7 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: SizedBox(),
                       );
                     } else if (snapshot.hasError) {
                       return Center(
@@ -188,8 +188,12 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            AddNewAdrressScreen(token: widget.mytoken, id: id),
+                        builder: (context) => AddNewAdrressScreen(
+                          token: widget.mytoken,
+                          id: id,
+                          Isdshadule: true,
+                          Isinstanta: true,
+                        ),
                       ));
                 },
                 controller: searchcontroller,
@@ -357,45 +361,61 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AddNewAdrressScreen(
-                                              id: id,
-                                              token: widget.mytoken,
-                                            )),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           AddNewAdrressScreen(
+                                  //             id: id,
+                                  //             token: widget.mytoken,
+                                  //           )),
+                                  // );
 
                                   // To map and get instance trip details
                                 },
-                                child: Container(
-                                  height: 150,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.car_crash,
-                                        size: 50,
-                                        color: Colors.black,
-                                      ),
-                                      SizedBox(
-                                          height:
-                                              10), // Adding space between icon and text
-                                      Text(
-                                        "Trip",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AddNewAdrressScreen(
+                                                Isinstanta: true,
+                                                id: id,
+                                                token: widget.mytoken,
+                                                Isdshadule: false,
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 150,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.car_crash,
+                                          size: 50,
                                           color: Colors.black,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                            height:
+                                                10), // Adding space between icon and text
+                                        Text(
+                                          "Trip",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -411,36 +431,51 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                                   // );
                                   // get time and date details about the trip for scheduling
                                 },
-                                child: Container(
-                                  height: 150,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.timelapse,
-                                          size: 50,
-                                          color: Colors.black,
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                10), // Adding space between icon and text
-                                        Center(
-                                          child: Text(
-                                            "Schedule",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AddNewAdrressScreen(
+                                                Isinstanta: false,
+                                                id: id,
+                                                token: widget.mytoken,
+                                                Isdshadule: true,
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 150,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.timelapse,
+                                            size: 50,
+                                            color: Colors.black,
+                                          ),
+                                          SizedBox(
+                                              height:
+                                                  10), // Adding space between icon and text
+                                          Center(
+                                            child: Text(
+                                              "Schedule",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ]),
+                                        ]),
+                                  ),
                                 ),
                               ),
                             ],

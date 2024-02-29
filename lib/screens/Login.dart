@@ -4,6 +4,7 @@ import 'package:familydriver/screens/widgets/Lable_Text.dart';
 import 'package:familydriver/screens/widgets/Rouned_boutton.dart';
 import 'package:familydriver/screens/widgets/TextComponent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../constant/App_color.dart';
 
@@ -15,6 +16,7 @@ class Loginpage extends StatefulWidget {
 }
 
 class _LoginpageState extends State<Loginpage> {
+  bool _passwordVisible = true;
   String token = "";
   bool isLoading = false;
   @override
@@ -44,7 +46,7 @@ class _LoginpageState extends State<Loginpage> {
             children: [
               UpperSection(),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Container(
                     width: double.infinity,
                     decoration: const BoxDecoration(
@@ -146,6 +148,7 @@ class _LoginpageState extends State<Loginpage> {
                               key: _UserNAMEformKey,
                               autovalidateMode: switched,
                               child: TextFormField(
+                                obscureText: _passwordVisible,
                                 controller: passwordContrller,
                                 keyboardType: TextInputType.name,
                                 focusNode: passwordFocusNode,
@@ -154,7 +157,25 @@ class _LoginpageState extends State<Loginpage> {
                                   fontSize: 14,
                                   color: AppColors.primaryColor,
                                 ),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
+                                  suffix: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 2),
+                                      child: Icon(
+                                        // Based on passwordVisible state choose the icon
+                                        _passwordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color:
+                                            Theme.of(context).primaryColorDark,
+                                      ),
+                                    ),
+                                  ),
                                   hintStyle: TextStyle(
                                     fontFamily: 'inter',
                                     fontSize: 14,
@@ -193,7 +214,6 @@ class _LoginpageState extends State<Loginpage> {
 
                                   return null; // Return null if the phone number is valid
                                 },
-                                obscureText: true,
                                 maxLength: 8,
                               ),
                             ),
@@ -311,46 +331,48 @@ class UpperSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 1,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            color: AppColors
-                .primaryColor, // Change the color to the desired background color
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: TextComponent(
-                      color: AppColors.secondaryColor,
-                      fontWeight: FontWeight.w600,
-                      fontsize: 40,
-                      text: 'Loging',
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              color: AppColors
+                  .primaryColor, // Change the color to the desired background color
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: TextComponent(
+                        color: AppColors.secondaryColor,
+                        fontWeight: FontWeight.w600,
+                        fontsize: 40,
+                        text: 'Loging',
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Center(
-                    child: TextComponent(
-                      color: AppColors.drivercardnotactive,
-                      fontWeight: FontWeight.w500,
-                      fontsize: 18,
-                      text: "Every login is a step towards progress",
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
-                  Image(
-                    image: AssetImage('assets/logo.png'),
-                    height: 150,
-                    width: 150,
-                  ),
-                ],
+                    Center(
+                      child: TextComponent(
+                        color: AppColors.drivercardnotactive,
+                        fontWeight: FontWeight.w500,
+                        fontsize: 18,
+                        text: "Every login is a step towards progress",
+                      ),
+                    ),
+                    Image(
+                      image: AssetImage('assets/logo.png'),
+                      height: 100,
+                      width: 100,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

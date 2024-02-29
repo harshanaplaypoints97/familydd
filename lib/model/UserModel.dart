@@ -113,7 +113,6 @@ class NearByDrivers {
   }
 }
 
-
 class Reqestedcards {
   final int id;
   final int customerId;
@@ -128,6 +127,10 @@ class Reqestedcards {
   final String updatedAt;
   final String fromLocation;
   final String toLocation;
+  final String scheduleTime;
+  final String type;
+  final Customer customer;
+  final Driver driver;
 
   Reqestedcards({
     required this.id,
@@ -143,23 +146,74 @@ class Reqestedcards {
     required this.updatedAt,
     required this.fromLocation,
     required this.toLocation,
+    required this.scheduleTime,
+    required this.type,
+    required this.customer,
+    required this.driver,
   });
 
   factory Reqestedcards.fromJson(Map<String, dynamic> json) {
     return Reqestedcards(
+        id: json["id"] ?? 0,
+        customerId: json["customer_id"] ?? 0,
+        driverId: json["driver_id"] ?? 0,
+        status: json["status"] ?? "",
+        fromLatitude: json["from_latitude"] ?? 0.0,
+        fromLongitude: json["from_longitude"] ?? 0.0,
+        toLatitude: json["to_latitude"] ?? 0.0,
+        toLongitude: json["to_longitude"] ?? 0.0,
+        distanceKm: json["distance_km"] ?? 0.0,
+        createdAt: json["created_at"] ?? "",
+        updatedAt: json["updated_at"] ?? "",
+        fromLocation: json["from_location"] ?? "",
+        toLocation: json["to_location"] ?? "",
+        scheduleTime: json["schedule_time"] ?? "",
+        type: json["type"] ?? "",
+        customer: Customer.fromJson(
+          json["customer"] ?? {},
+        ),
+        driver: Driver.fromJson(
+          json["driver"] ?? {},
+        ));
+  }
+}
+
+class Customer {
+  final int id;
+  final String name;
+  final String phoneNumber;
+
+  Customer({
+    required this.id,
+    required this.name,
+    required this.phoneNumber,
+  });
+
+  factory Customer.fromJson(Map<String, dynamic> json) {
+    return Customer(
       id: json["id"] ?? 0,
-      customerId: json["customer_id"] ?? 0,
-      driverId: json["driver_id"] ?? 0,
-      status: json["status"] ?? "",
-      fromLatitude: json["from_latitude"] ?? 0.0,
-      fromLongitude: json["from_longitude"] ?? 0.0,
-      toLatitude: json["to_latitude"] ?? 0.0,
-      toLongitude: json["to_longitude"] ?? 0.0,
-      distanceKm: json["distance_km"] ?? 0.0,
-      createdAt: json["created_at"] ?? "",
-      updatedAt: json["updated_at"] ?? "",
-      fromLocation: json["from_location"] ?? "",
-      toLocation: json["to_location"] ?? "",
+      name: json["name"] ?? "",
+      phoneNumber: json["phone_number"] ?? "",
+    );
+  }
+}
+
+class Driver {
+  final int id;
+  final String name;
+  final String phone_number;
+
+  Driver({
+    required this.id,
+    required this.name,
+    required this.phone_number,
+  });
+
+  factory Driver.fromJson(Map<String, dynamic> json) {
+    return Driver(
+      id: json["id"] ?? 0,
+      name: json["name"] ?? "",
+      phone_number: json["phone_number"] ?? "",
     );
   }
 }

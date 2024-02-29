@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:familydriver/Api/Customer_Loacation_End_points.dart';
 import 'package:familydriver/constant/App_color.dart';
 import 'package:familydriver/provider/LocationProvider.dart';
+import 'package:familydriver/screens/Customer/CustomerMainPage.dart';
 import 'package:familydriver/screens/Customer/Customer_Home_page.dart';
+import 'package:familydriver/screens/Driver/DriverMainpage.dart';
 import 'package:familydriver/screens/Driver/Driver_Home_page.dart';
 import 'package:familydriver/screens/Login.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +39,12 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => num == 1
-                ? CustomerHomepage(mytoken: token)
+                ? CustomerMainPage(
+                  p: false,
+                    token: token,
+                  )
                 : num == 2
-                    ? DriverHomePage(
+                    ? DriverMainPage(
                         token: token,
                       )
                     : Loginpage(),

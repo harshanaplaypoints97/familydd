@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:familydriver/constant/App_color.dart';
 import 'package:familydriver/model/UserModel.dart';
+import 'package:familydriver/screens/Customer/CustomerMainPage.dart';
 import 'package:familydriver/screens/Customer/Customer_Home_page.dart';
+import 'package:familydriver/screens/Driver/DriverMainpage.dart';
 import 'package:familydriver/screens/Driver/Driver_Home_page.dart';
 
 import 'package:http/http.dart' as http;
@@ -48,7 +50,10 @@ class UserRoleNavigatorEndPoint {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CustomerHomepage(mytoken: token),
+              builder: (context) => CustomerMainPage(
+                p: false,
+                token: token,
+              ),
             ));
         //Adding new
         prefs.setInt('num', 1);
@@ -56,7 +61,7 @@ class UserRoleNavigatorEndPoint {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DriverHomePage(token: token),
+              builder: (context) => DriverMainPage(token: token),
             ));
         //Adding New
         prefs.setInt('num', 2);

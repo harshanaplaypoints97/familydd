@@ -5,12 +5,14 @@ import 'package:familydriver/Api/NearDrivers_Detail_End_point.dart';
 import 'package:familydriver/constant/App_color.dart';
 import 'package:familydriver/model/UserModel.dart';
 import 'package:familydriver/screens/Customer/ReqestedPage.dart';
+import 'package:familydriver/screens/Customer/InstanceRideConfirmPage_a.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NearDriverList extends StatefulWidget {
   String token, fromloaction, tolocation;
   double startlongitude, startlatitude, endlatitude, endlongitude, distance;
+
   int customerid;
   NearDriverList({
     super.key,
@@ -23,7 +25,6 @@ class NearDriverList extends StatefulWidget {
     required this.tolocation,
     required this.distance,
     required this.customerid,
-    
   });
 
   @override
@@ -111,8 +112,7 @@ class _NearDriverListState extends State<NearDriverList> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ReqestedPage(
-                                 
+                                builder: (context) => Ridedetail(
                                   customerid: widget.customerid,
                                   distance: widget.distance,
                                   endlatitude: widget.endlatitude,
@@ -122,10 +122,44 @@ class _NearDriverListState extends State<NearDriverList> {
                                   startlongitude: widget.startlongitude,
                                   token: widget.token,
                                   tolocation: widget.tolocation,
-                                  driver_id:
+                                  driverid:
                                       driversList![index].driverId.toInt(),
+                                  pickup: widget.fromloaction,
+                                  drop: widget.tolocation,
+                                  Distance: double.parse(
+                                          widget.distance.toStringAsFixed(2))
+                                      .toString(),
+                                  driver_age: '21',
+                                  driver_contact_num: driversList![index]
+                                      .phoneNumber
+                                      .toString(),
+                                  driver_name:
+                                      driversList![index].name.toString(),
+                                  driver_nic:
+                                      driversList![index].nic.toString(),
+                                  totalprice:
+                                      double.parse(widget.distance.toString()) *
+                                          200,
                                 ),
                               ));
+
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => ReqestedPage(
+                          // customerid: widget.customerid,
+                          // distance: widget.distance,
+                          // endlatitude: widget.endlatitude,
+                          // endlongitude: widget.endlongitude,
+                          // fromloaction: widget.fromloaction,
+                          // startlatitude: widget.startlatitude,
+                          // startlongitude: widget.startlongitude,
+                          // token: widget.token,
+                          // tolocation: widget.tolocation,
+                          // driver_id:
+                          //     driversList![index].driverId.toInt(),
+                          //       ),
+                          //     ));
                         },
                         child: Container(
                           child: Container(
@@ -281,12 +315,12 @@ class _NearDriverListState extends State<NearDriverList> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.send),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-        onPressed: () => {},
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.send),
+      //   backgroundColor: Colors.green,
+      //   foregroundColor: Colors.white,
+      //   onPressed: () => {},
+      // ),
       /*floatingActionButton:FloatingActionButton.extended(  
         onPressed: () {},  
         icon: Icon(Icons.save),  

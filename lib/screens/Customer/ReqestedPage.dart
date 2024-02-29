@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
 import 'package:familydriver/Api/Reqesting_End_Pointz.dart';
 import 'package:familydriver/constant/App_color.dart';
+import 'package:familydriver/screens/Customer/CustomerMainPage.dart';
 import 'package:familydriver/screens/widgets/Rouned_boutton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,22 +12,23 @@ import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 
 class ReqestedPage extends StatefulWidget {
-  String token, fromloaction, tolocation;
+  String token, fromloaction, tolocation, dateandTime, ridertype;
   double startlongitude, startlatitude, endlatitude, endlongitude, distance;
   int customerid, driver_id;
-  ReqestedPage({
-    super.key,
-    required this.token,
-    required this.endlatitude,
-    required this.endlongitude,
-    required this.startlatitude,
-    required this.startlongitude,
-    required this.fromloaction,
-    required this.tolocation,
-    required this.distance,
-    required this.customerid,
-    required this.driver_id,
-  });
+  ReqestedPage(
+      {super.key,
+      required this.token,
+      required this.endlatitude,
+      required this.endlongitude,
+      required this.startlatitude,
+      required this.startlongitude,
+      required this.fromloaction,
+      required this.tolocation,
+      required this.distance,
+      required this.customerid,
+      required this.driver_id,
+      required this.dateandTime,
+      required this.ridertype});
 
   @override
   State<ReqestedPage> createState() => _ReqestedPageState();
@@ -36,6 +38,7 @@ class _ReqestedPageState extends State<ReqestedPage> {
   int rideid = 0;
   @override
   void initState() {
+    Logger().i(widget.dateandTime);
     ridereq();
 
     // TODO: implement initState
@@ -52,6 +55,8 @@ class _ReqestedPageState extends State<ReqestedPage> {
     String status,
     String startDestination,
     String endDestination,
+    String RidesType,
+    String Dateandtime,
     int driverId,
   ) async {
     try {
@@ -72,6 +77,8 @@ class _ReqestedPageState extends State<ReqestedPage> {
           "to_latitude": tolatitude.toString(),
           "to_longitude": tolongitude.toString(),
           "distance_km": distance.toString(),
+          "type": RidesType.toString(),
+          "schedule_time": Dateandtime,
         },
       );
 
@@ -104,9 +111,22 @@ class _ReqestedPageState extends State<ReqestedPage> {
           "declined",
           widget.fromloaction,
           widget.tolocation,
+          widget.ridertype,
+          widget.dateandTime,
           widget.driver_id);
 
       Logger().i(rideid.toString());
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomerMainPage(
+            token: widget.token,
+            p: true,
+          ),
+        ),
+      );
     });
   }
 
@@ -189,28 +209,6 @@ class _ReqestedPageState extends State<ReqestedPage> {
           SizedBox(
             height: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: RoundedButton(
-                buttonText: 'Cancle',
-                onPress: () {
-                  ReqestingDriver.RidesRequestUpdate(
-                      rideid,
-                      widget.token,
-                      widget.customerid,
-                      widget.startlongitude,
-                      widget.startlatitude,
-                      widget.endlongitude,
-                      widget.endlatitude,
-                      widget.distance,
-                      'canceled',
-                      widget.fromloaction,
-                      widget.tolocation,
-                      widget.driver_id);
-                  Navigator.pop(context);
-                },
-                color: Colors.green),
-          )
         ],
       ),
     );
