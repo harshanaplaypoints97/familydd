@@ -6,6 +6,7 @@ import 'package:familydriver/constant/App_color.dart';
 import 'package:familydriver/model/UserModel.dart';
 import 'package:familydriver/screens/Customer/ReqestedPage.dart';
 import 'package:familydriver/screens/Customer/InstanceRideConfirmPage_a.dart';
+import 'package:familydriver/screens/Driver/widgets/DriverCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -142,169 +143,12 @@ class _NearDriverListState extends State<NearDriverList> {
                                           200,
                                 ),
                               ));
-
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => ReqestedPage(
-                          // customerid: widget.customerid,
-                          // distance: widget.distance,
-                          // endlatitude: widget.endlatitude,
-                          // endlongitude: widget.endlongitude,
-                          // fromloaction: widget.fromloaction,
-                          // startlatitude: widget.startlatitude,
-                          // startlongitude: widget.startlongitude,
-                          // token: widget.token,
-                          // tolocation: widget.tolocation,
-                          // driver_id:
-                          //     driversList![index].driverId.toInt(),
-                          //       ),
-                          //     ));
                         },
-                        child: Container(
-                          child: Container(
-                            width: 380,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        color: Colors.white,
-                                        width: 350,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 0),
-                                          child: Container(
-                                            width: 350,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.drivercardactive,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(25),
-                                                topRight: Radius.circular(25),
-                                                bottomLeft: Radius.circular(25),
-                                                bottomRight: Radius.zero,
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Flexible(
-                                                  flex: 4,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 10),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        //Name Of The Driver
-                                                        Text(
-                                                          driversList?[index]
-                                                                  .name ??
-                                                              "",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16),
-                                                        ),
-                                                        //can Drvie Vehicle Type
-                                                        Text(
-                                                          driversList?[index]
-                                                                  .vehicleType ??
-                                                              "",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16),
-                                                        ),
-                                                        //Drver Phone Number
-                                                        Text(
-                                                          driversList?[index]
-                                                                  .phoneNumber ??
-                                                              "",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16),
-                                                        ),
-                                                        //Drver Status
-                                                        Text(
-                                                          driversList?[index]
-                                                                  .status ??
-                                                              "",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16),
-                                                        ),
-
-                                                        //Driver Loacation
-                                                        Text(
-                                                          driversList?[index]
-                                                                  .location ??
-                                                              "",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16),
-                                                        ),
-
-                                                        Text(
-                                                          driversList?[index]
-                                                                  .status ??
-                                                              "",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16),
-                                                        ),
-                                                        // Padding(
-                                                        //   padding:
-                                                        //       const EdgeInsets.all(
-                                                        //           11.0),
-                                                        //   child: Text(
-                                                        //     '"Experienced and safety-focused driver with a flawlessddddddd driving record hfewihfeifhiefhefiheihfheuhfuhekfheikfhuehfejshefoefhifhehfheofoehfoifhfhand expertise in navigating diverse road conditions. Skilled in efficient route planning and adept at delivering exceptional customer service. Reliable team player with a strong commitment to on-time performance.ssssssssssssssssssss"',
-                                                        //     style: TextStyle(
-                                                        //         color: Colors.white,
-                                                        //         fontSize: 12),
-                                                        //     // textAlign: TextAlign.justify,
-                                                        //   ),
-                                                        // ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                    flex: 3, child: Container())
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right: 0,
-                                        top: 75,
-                                        child: Image.asset(
-                                          'assets/DriverPic.png',
-                                          width: 160,
-                                          height: 150,
-                                          fit: BoxFit.fitHeight,
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                        child: DriverCard(
+                          driverimage:
+                              driversList?[index].profileImageUrl ?? "",
+                          drivername: driversList?[index].name ?? "",
+                          drivetype: driversList?[index].vehicleType ?? "",
                         ),
                       );
                     },
@@ -315,17 +159,6 @@ class _NearDriverListState extends State<NearDriverList> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.send),
-      //   backgroundColor: Colors.green,
-      //   foregroundColor: Colors.white,
-      //   onPressed: () => {},
-      // ),
-      /*floatingActionButton:FloatingActionButton.extended(  
-        onPressed: () {},  
-        icon: Icon(Icons.save),  
-        label: Text("Save"),  
-      ), */
     );
   }
 }

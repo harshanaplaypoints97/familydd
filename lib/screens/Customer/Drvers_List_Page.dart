@@ -4,6 +4,7 @@ import 'package:familydriver/Api/Get_All_drivers.dart';
 import 'package:familydriver/model/UserModel.dart';
 import 'package:familydriver/screens/Customer/InstanceRideConfirmPage_a.dart';
 import 'package:familydriver/screens/Customer/RideShaduleConfirmpage.dart';
+import 'package:familydriver/screens/Driver/widgets/DriverCard.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -91,132 +92,34 @@ class _DriverListPageState extends State<DriverListPage> {
                     itemBuilder: (context, index) {
                       // Build your list item here
                       return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RideShadulePage(
-                                        totalprice: widget.distance * 200,
-                                        Distance: widget.distance,
-                                        customerid: widget.customerid,
-                                        driver_contact_num:
-                                            driversList![index].phone_number,
-                                        driver_name: driversList![index].name,
-                                        driver_nic: driversList![index].nic,
-                                        driveri: driversList![index].id,
-                                        endlatitude: widget.endlatitude,
-                                        endlongitude: widget.endlongitude,
-                                        fromloaction: widget.fromlocation,
-                                        startlatitude: widget.startlatitude,
-                                        startlongitude: widget.startlongitude,
-                                        token: widget.token,
-                                        tolocation: widget.tolocation,
-                                      )));
-                        },
-                        child: Container(
-                          width: 380,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Container(
-                                      color: Colors.white,
-                                      width: 350,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 0),
-                                        child: Container(
-                                          width: 350,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.drivercardactive,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25),
-                                              topRight: Radius.circular(25),
-                                              bottomLeft: Radius.circular(25),
-                                              bottomRight: Radius.zero,
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                              children: [
-                                                Flexible(
-                                                  flex: 4,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      //Name Of The Driver
-                                                      Text(
-                                                        driversList?[index]
-                                                                .name ??
-                                                            "",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16),
-                                                      ),
-                                                      //can Drvie Vehicle Type
-                                                      Text(
-                                                        driversList?[index]
-                                                                .vehicle_type ??
-                                                            "",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16),
-                                                      ),
-                                                      //Drver Phone Number
-                                                      Text(
-                                                        driversList?[index]
-                                                                .phone_number ??
-                                                            "",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16),
-                                                      ),
-                                                      //Drver Status
-                                                      Text(
-                                                        driversList?[index]
-                                                                .status ??
-                                                            "",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                    flex: 3, child: Container())
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Image.asset(
-                                        'assets/DriverPic.png',
-                                        width: 160,
-                                        height: 80,
-                                        fit: BoxFit.fitHeight,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RideShadulePage(
+                                          totalprice: widget.distance * 200,
+                                          Distance: widget.distance,
+                                          customerid: widget.customerid,
+                                          driver_contact_num:
+                                              driversList![index].phone_number,
+                                          driver_name: driversList![index].name,
+                                          driver_nic: driversList![index].nic,
+                                          driveri: driversList![index].id,
+                                          endlatitude: widget.endlatitude,
+                                          endlongitude: widget.endlongitude,
+                                          fromloaction: widget.fromlocation,
+                                          startlatitude: widget.startlatitude,
+                                          startlongitude: widget.startlongitude,
+                                          token: widget.token,
+                                          tolocation: widget.tolocation,
+                                        )));
+                          },
+                          child: DriverCard(
+                              driverimage:
+                                  driversList![index].profile_image_url ?? "",
+                              drivername: driversList![index].name ?? "",
+                              drivetype:
+                                  driversList![index].vehicle_type ?? ""));
                     },
                   );
                 }
