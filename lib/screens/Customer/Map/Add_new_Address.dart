@@ -34,6 +34,7 @@ class AddNewAdrressScreen extends StatefulWidget {
 }
 
 class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
+  var num = 0;
   late LocationProvider _locationprovider;
   bool mapcamera = false;
   bool searchedaddressed = false;
@@ -48,17 +49,17 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
   GoogleMapController? mapController; //contrller for Google map
   CameraPosition? cameraPosition;
   LatLng startLocation = LatLng(7.8731, 80.7718);
-  String location1 =
-      "Search Pickup Location                                                          ";
-  String location2 =
-      "Search Drop Location                                                         ";
+  String location1 = "Search Pickup Location";
+  String location2 = "Search Drop Location";
   Position? currentPosition; // Add this line
 
   @override
   void initState() {
-    super.initState();
     _locationprovider = Provider.of<LocationProvider>(context, listen: false);
     _locationprovider.clearPolyline();
+    _locationprovider.clearendPositions();
+
+    super.initState();
     // Get the user's current location continuously
   }
 
@@ -67,9 +68,10 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
     return Consumer2<Mapprovider, LocationProvider>(
       builder: (context, value, value2, child) => Scaffold(
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Stack(
                 children: [
                   GoogleMap(
@@ -157,6 +159,7 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
               ),
             ),
             Expanded(
+              flex: 2,
               child: Container(
                 color: Colors.white,
                 child: Padding(
@@ -164,16 +167,23 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                   child: Container(
                     child: SingleChildScrollView(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: 10,
+                          ),
                           InkWell(
                             onTap: () async {
+                              _locationprovider.clearPolyline();
                               var place = await PlacesAutocomplete.show(
                                   context: context,
                                   apiKey: googleApikey,
                                   mode: Mode.overlay,
                                   types: [],
                                   strictbounds: false,
-                                  //google_map_webservice package
+                                  components: [
+                                    Component(Component.country, 'Lk')
+                                  ],
                                   onError: (err) {
                                     print(err);
                                   });
@@ -237,6 +247,10 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                           ),
                           InkWell(
                             onTap: () async {
+                              if (num >= 1) {
+                                _locationprovider.clearPolyline();
+                              }
+
                               value2.clearendPositions();
                               var place = await PlacesAutocomplete.show(
                                   context: context,
@@ -244,6 +258,9 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                                   mode: Mode.overlay,
                                   types: [],
                                   strictbounds: false,
+                                  components: [
+                                    Component(Component.country, 'Lk')
+                                  ],
                                   //google_map_webservice package
                                   onError: (err) {
                                     print(err);
@@ -280,6 +297,7 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                                         CameraPosition(
                                             target: newlatlang, zoom: 17)));
                               }
+                              num++;
                             },
                             child: Container(
                               child: SingleChildScrollView(
@@ -312,28 +330,41 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                               widget.Isinstanta
                                   ? InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => NearDriverList(
-                                                  customerid: widget.id,
-                                                  token: widget.token,
-                                                  startlatitude:
-                                                      value2.startlatitude,
-                                                  startlongitude:
-                                                      value2.stratlongitude,
-                                                  endlatitude:
-                                                      value2.endlatitude,
-                                                  endlongitude:
-                                                      value2.endlongitude,
-                                                  fromloaction: location1,
-                                                  tolocation: location2,
-                                                  distance: value2.getdistance(
-                                                      value2.startlatitude,
-                                                      value2.stratlongitude,
-                                                      value2.endlatitude,
-                                                      value2.endlongitude))),
-                                        );
+                                        if (location2.toString() ==
+                                                "Search Drop Location" ||
+                                            location1.toString() ==
+                                                "Search Pickup Location") {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  'Please Add Your Pickup & Drop Loacation !'),
+                                            ),
+                                          );
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => NearDriverList(
+                                                    customerid: widget.id,
+                                                    token: widget.token,
+                                                    startlatitude:
+                                                        value2.startlatitude,
+                                                    startlongitude:
+                                                        value2.stratlongitude,
+                                                    endlatitude:
+                                                        value2.endlatitude,
+                                                    endlongitude:
+                                                        value2.endlongitude,
+                                                    fromloaction: location1,
+                                                    tolocation: location2,
+                                                    distance: value2.getdistance(
+                                                        value2.startlatitude,
+                                                        value2.stratlongitude,
+                                                        value2.endlatitude,
+                                                        value2.endlongitude))),
+                                          );
+                                        }
                                       },
                                       child: Container(
                                         child: Center(
@@ -360,28 +391,41 @@ class _AddNewAdrressScreenState extends State<AddNewAdrressScreen> {
                               widget.Isdshadule
                                   ? GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => DriverListPage(
-                                                  customerid: widget.id,
-                                                  token: widget.token,
-                                                  startlatitude:
-                                                      value2.startlatitude,
-                                                  startlongitude:
-                                                      value2.stratlongitude,
-                                                  endlatitude:
-                                                      value2.endlatitude,
-                                                  endlongitude:
-                                                      value2.endlongitude,
-                                                  fromlocation: location1,
-                                                  tolocation: location2,
-                                                  distance: value2.getdistance(
-                                                      value2.startlatitude,
-                                                      value2.stratlongitude,
-                                                      value2.endlatitude,
-                                                      value2.endlongitude))),
-                                        );
+                                        if (location2.toString() ==
+                                                "Search Drop Location" ||
+                                            location1.toString() ==
+                                                "Search Pickup Location") {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  'Please Add Your Pickup & Drop Loacation !'),
+                                            ),
+                                          );
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => DriverListPage(
+                                                    customerid: widget.id,
+                                                    token: widget.token,
+                                                    startlatitude:
+                                                        value2.startlatitude,
+                                                    startlongitude:
+                                                        value2.stratlongitude,
+                                                    endlatitude:
+                                                        value2.endlatitude,
+                                                    endlongitude:
+                                                        value2.endlongitude,
+                                                    fromlocation: location1,
+                                                    tolocation: location2,
+                                                    distance: value2.getdistance(
+                                                        value2.startlatitude,
+                                                        value2.stratlongitude,
+                                                        value2.endlatitude,
+                                                        value2.endlongitude))),
+                                          );
+                                        }
                                       },
                                       child: Container(
                                         child: Center(

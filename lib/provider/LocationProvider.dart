@@ -86,6 +86,13 @@ class LocationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> clearstartPositions() async {
+    startlatitude = 0;
+    stratlongitude = 0;
+
+    notifyListeners();
+  }
+
 //Get Address
   String get address =>
       "${placemarks.first.postalCode},${placemarks.first.street},${placemarks.first.postalCode},${placemarks.first.locality}";
@@ -122,6 +129,9 @@ class LocationProvider extends ChangeNotifier {
 
       if (result.points.isNotEmpty) {
         for (var element in result.points) {
+          if (element == 2) {
+            clearPolyline();
+          }
           _polyDta.add(LatLng(element.latitude, element.longitude));
         }
         notifyListeners();

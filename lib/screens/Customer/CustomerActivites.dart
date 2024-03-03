@@ -206,11 +206,10 @@ class _CustomerActivitiesState extends State<CustomerActivities>
                                     distances: driversList![index].distanceKm,
                                     customerid: driversList![index].customerId,
                                     status: "accepted",
-                                    customercontactnumber: driversList![index]
-                                        .customer
-                                        .phoneNumber,
+                                    customercontactnumber:
+                                        driversList![index].driver.phone_number,
                                     customername:
-                                        driversList![index].customer.name,
+                                        driversList![index].driver.name,
                                     datetime: driversList![index].scheduleTime,
                                     distance: driversList![index]
                                             .distanceKm
@@ -253,11 +252,10 @@ class _CustomerActivitiesState extends State<CustomerActivities>
                                     distances: driversList![index].distanceKm,
                                     customerid: driversList![index].customerId,
                                     status: "accepted",
-                                    customercontactnumber: driversList![index]
-                                        .customer
-                                        .phoneNumber,
+                                    customercontactnumber:
+                                        driversList![index].driver.phone_number,
                                     customername:
-                                        driversList![index].customer.name,
+                                        driversList![index].driver.name,
                                     datetime: driversList![index].scheduleTime,
                                     distance: driversList![index]
                                             .distanceKm
@@ -300,11 +298,10 @@ class _CustomerActivitiesState extends State<CustomerActivities>
                                     distances: driversList![index].distanceKm,
                                     customerid: driversList![index].customerId,
                                     status: "canceled",
-                                    customercontactnumber: driversList![index]
-                                        .customer
-                                        .phoneNumber,
+                                    customercontactnumber:
+                                        driversList![index].driver.phone_number,
                                     customername:
-                                        driversList![index].customer.name,
+                                        driversList![index].driver.name,
                                     datetime: driversList![index].scheduleTime,
                                     distance: driversList![index]
                                             .distanceKm

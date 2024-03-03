@@ -31,6 +31,7 @@ class ActivityCancled extends StatelessWidget {
         color: Color.fromARGB(255, 241, 99, 99),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

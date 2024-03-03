@@ -3,6 +3,7 @@ import 'package:familydriver/Api/Get_User_Detail_End_Point.dart';
 import 'package:familydriver/constant/App_color.dart';
 import 'package:familydriver/model/UserModel.dart';
 import 'package:familydriver/provider/LocationProvider.dart';
+import 'package:familydriver/screens/Customer/AddCustomerFavoriteLoacations.dart';
 import 'package:familydriver/screens/Customer/Map/Add_new_Address.dart';
 import 'package:familydriver/screens/NavSidebar.dart';
 import 'package:flutter/material.dart';
@@ -267,18 +268,36 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                           ),
                           padding: EdgeInsets.all(10),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(
-                                Icons.home,
-                                color: Colors.black,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.home,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Home   ' + value.homeaddress,
+                                    style: TextStyle(
+                                        color: Colors.grey[700], fontSize: 10),
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Home   ' + value.homeaddress,
-                                style: TextStyle(
-                                    color: Colors.grey[700], fontSize: 10),
+                              InkWell(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddFaverioteLocation(
+                                        Location: 'Home',
+                                        token: widget.mytoken,
+                                        id: id,
+                                      ),
+                                    )),
+                                child: Icon(Icons.edit),
                               )
                             ],
                           ),
@@ -295,18 +314,36 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                           ),
                           padding: EdgeInsets.all(10),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(
-                                Icons.business,
-                                color: Colors.black,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.business,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Office' + value.officeaddress,
+                                    style: TextStyle(
+                                        color: Colors.grey[700], fontSize: 10),
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Office' + value.officeaddress,
-                                style: TextStyle(
-                                    color: Colors.grey[700], fontSize: 10),
+                              InkWell(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddFaverioteLocation(
+                                        Location: 'Office',
+                                        token: widget.mytoken,
+                                        id: id,
+                                      ),
+                                    )),
+                                child: Icon(Icons.edit),
                               )
                             ],
                           ),
@@ -323,18 +360,36 @@ class _CustomerHomepageState extends State<CustomerHomepage> {
                           ),
                           padding: EdgeInsets.all(10),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(
-                                Icons.restaurant,
-                                color: Colors.black,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.restaurant,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Restaurant' + value.resturantaddress,
+                                    style: TextStyle(
+                                        color: Colors.grey[700], fontSize: 10),
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Restaurant' + value.resturantaddress,
-                                style: TextStyle(
-                                    color: Colors.grey[700], fontSize: 10),
+                              InkWell(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddFaverioteLocation(
+                                        Location: 'Restaurant',
+                                        token: widget.mytoken,
+                                        id: id,
+                                      ),
+                                    )),
+                                child: Icon(Icons.edit),
                               )
                             ],
                           ),

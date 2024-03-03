@@ -46,7 +46,7 @@ class CustomerAddLocation with ChangeNotifier {
             homelatitude = locationData["latitude"];
             homelongitude = locationData["longitude"];
             notifyListeners();
-          } else if (locationData["name"] == "office") {
+          } else if (locationData["name"] == "restaurent") {
             officeaddress = locationData["location"];
             officelattude = locationData["latitude"];
             officelongitude = locationData["longitude"];
@@ -70,7 +70,14 @@ class CustomerAddLocation with ChangeNotifier {
     }
   }
 
-  Future<void> addlocation(String token, BuildContext context) async {
+  Future<void> addlocation(
+      String token,
+      int customerid,
+      String location,
+      double latitude,
+      double longitude,
+      String type,
+      BuildContext context) async {
     try {
       final response = await http.post(
           Uri.parse(AppColors.BaseUrl + "api/customer/locations"),
@@ -80,11 +87,11 @@ class CustomerAddLocation with ChangeNotifier {
           },
           body: {
             {
-              "user_id": 6,
-              "name": "home",
-              "location": "fort",
-              "longitude": 555.76,
-              "latitude": 32.2,
+              "user_id": customerid,
+              "name": type,
+              "location": location,
+              "longitude": latitude,
+              "latitude": longitude,
               "is_default": false
             }
           });
@@ -93,6 +100,7 @@ class CustomerAddLocation with ChangeNotifier {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
+        Navigator.pop(context);
       }
     } catch (error) {
       // Handle error
